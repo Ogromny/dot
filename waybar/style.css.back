@@ -1,0 +1,80 @@
+window#waybar {
+	font: 14px "Jetbrains Mono Medium";
+	letter-spacing: 0.5px;
+	font-weight: 600;
+	color: rgb(248, 248, 242);
+	background: #2E3440;
+}
+
+#workspaces {
+	margin: 2px 8px;
+}
+
+#workspaces button {
+	margin: 2px 0;
+	min-height: 1px;
+	min-width: 1px;
+	padding: 2px 7px;
+	margin-right: 4px;
+	color: rgb(248, 248, 242);
+}
+
+#workspaces button:hover {
+	background: inherit;
+	box-shadow: none;
+	border: none;
+}
+
+#workspaces button.focused {
+	background: rgb(98, 114, 164);
+	box-shadow: none;
+}
+
+#workspaces button.urgent {
+	background: rgb(255, 85, 85);
+}
+
+#window {
+	margin-left: -4px;
+}
+
+#network {
+	margin-right: 8px;
+}
+
+#network.disconnected {
+	margin-top: 1px;
+	border-bottom: 1px solid rgb(255, 85, 85);
+}
+
+#pulseaudio {
+	margin-right: 8px;
+}
+
+#pulseaudio.bluetooth {
+	margin-top: 1px;
+	border-bottom: 1px solid rgb(139, 233, 253);
+}
+
+#pulseaudio.muted {
+	margin-top: 1px;
+	border-bottom: 1px solid rgb(255, 85, 85);
+}
+
+#battery, #battery.charging {
+	margin-right: 8px;
+	margin-top: 1px;
+	border-bottom: 1px solid rgb(80, 250, 123);
+}
+
+#battery.warning {
+	border-bottom-color: rgb(241, 250, 140);
+}
+
+#battery.critical {
+	border-bottom-color: rgb(255, 85, 85);
+}
+
+#clock {
+	margin-right: 8px;
+}

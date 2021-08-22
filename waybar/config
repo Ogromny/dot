@@ -1,0 +1,48 @@
+{
+    "layer": "top",
+    // "position": "bottom", // Waybar position (top|bottom|left|right)
+    "height": 32,
+    // "modules-right": ["mpd", "idle_inhibitor", "pulseaudio", "network", "cpu", "memory", "temperature", "backlight", "battery", "battery#bat2", "clock", "tray"],
+    "modules-left": ["sway/workspaces"],
+    "modules-center": ["tray",],
+    "modules-right": ["pulseaudio", "battery", "clock"],
+    "sway/window": {
+		"max-length": 120,
+		"tooltip": false
+    },
+    "sway/workspaces": {
+		"disable-scroll": true
+    },
+    "tray": {
+		"icon-size": 18,
+		"spacing": 10
+    },
+    "pulseaudio": {
+		"format": "{icon} {volume}%",
+		"scroll-step": 0.0,
+		"on-click": "pavucontrol",
+		"tooltip": false,
+		"format-muted": "",
+		"format-icons": {
+			"headphone": "",
+			"hands-free": "",
+			"headset": "",
+			"phone": "",
+			"portable": "",
+			"car": "",
+			"default": ["", ""]
+		},
+    },
+    "battery": {
+		"format": "{icon}  {capacity}%",
+		"tooltip": false,
+		"states": {
+			"warning": 25,
+			"critical": 10
+		},
+		"format-icons": ["", "", "", "", ""],
+    },
+	"clock": {
+		"format": " {:%H:%M}"
+	}
+}

@@ -1,0 +1,17 @@
+font=SFMono Nerd Font 11
+background-color=#24283bff
+text-color=#c0caf5ff
+padding=10,20
+border-size=0
+border-radius=4
+icons=1
+markup=1
+actions=1
+layer=overlay
+
+[urgency=low]
+text-color=#565f89ff
+
+[urgency=critical]
+text-color=#f7768eff
+

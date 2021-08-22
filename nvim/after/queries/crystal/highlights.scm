@@ -1,0 +1,1 @@
+/home/ogromny/Code/Crystal/tree-sitter-crystal/queries/highlights.scm
