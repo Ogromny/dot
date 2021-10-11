@@ -10,35 +10,34 @@ vim.o.relativenumber = true
 vim.o.hidden = true
 vim.o.tabstop = 4
 vim.o.shiftwidth = 4
-vim.o.expandtab = false
+vim.o.expandtab = true
+vim.o.completeopt = "menu,menuone,noselect"
 
 vim.cmd [[nnoremap <Up> <Nop>]]
 vim.cmd [[nnoremap <Down> <Nop>]]
 vim.cmd [[nnoremap <Left> <Nop>]]
 vim.cmd [[nnoremap <Right> <Nop>]]
 
+vim.cmd [[autocmd BufRead,BufNewFile *.ha set ft=hare]]
+vim.cmd [[set expandtab]]
+
 return packer.startup(function()
     use {
 		"wbthomason/packer.nvim",
 		opt = true
 	}
-	-- use {
-	-- 	"folke/tokyonight.nvim",
-	-- 	config = function ()
-	-- 		vim.g.tokyonight_style = "day"
-	-- 		-- vim.g.tokyonight_transparent = true
-	-- 		vim.g.tokyonight_hide_inactive_statusline = true
-	-- 		vim.cmd "colorscheme tokyonight"
-	-- 	end
-	-- }
 	use {
 		"folke/lsp-colors.nvim",
 		config = config.lsp_colors
 	}
 	use {
-		"EdenEast/nightfox.nvim",
-		config = config.nightfox
+		"folke/tokyonight.nvim",
+		config = config.tokyonight
 	}
+	-- use {
+	-- 	"EdenEast/nightfox.nvim",
+	-- 	config = config.nightfox
+	-- }
 	use {
 		"kyazdani42/nvim-web-devicons",
 		config = config.nvim_web_devicons
@@ -106,4 +105,15 @@ return packer.startup(function()
 		requires = { "godlygeek/tabular" },
 		config = config.markdown
 	}
+	use {
+		"jwalton512/vim-blade"
+	}
+	use {
+		"folke/which-key.nvim",
+		config = config.which_key
+	}
+    use {
+        "kristijanhusak/orgmode.nvim",
+        config = config.orgmode
+    }
 end)

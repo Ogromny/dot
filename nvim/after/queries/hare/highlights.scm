@@ -1,0 +1,1 @@
+/home/ogromny/Code/C/tree-sitter-hare/queries/highlights.scm

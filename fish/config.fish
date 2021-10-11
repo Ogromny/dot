@@ -10,4 +10,4 @@ set -gx EDITOR nvim
 
 set -gx FZF_LEGACY_KEYBINDINGS 0
 
-set -gx PATH (yarn global bin) $PATH
+set -gx PATH (yarn global bin) $HOME/.local/bin/zls $HOME/.local/bin/kotlin-language-server $HOME/.local/bin $PATH

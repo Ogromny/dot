@@ -116,7 +116,7 @@ default_floating_border pixel 1
 hide_edge_borders smart
 floating_modifier $mod normal
 
-exec swaybg -i ~/Images/wallhaven-lm6jm2.jpg
+exec swaybg -i ~/Images/wallhaven-g7qz1l.png
 exec mako
 exec waybar
 exec sudo cpupower frequency-set -u 2.00GHz -g powersave
