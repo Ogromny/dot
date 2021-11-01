@@ -213,8 +213,8 @@ function M.nvim_lspconfig()
         [[vnoremap <silent> <leader>ac :lua vim.lsp.buf.range_code_action()<CR>]],
         [[nnoremap <silent> <leader>r :lua vim.lsp.buf.rename()<CR>]],
         [[nnoremap <silent> <leader>f :lua vim.lsp.buf.formatting()<CR>]],
-        [[nnoremap <silent> [g :lua vim.lsp.diagnostic.goto_prev({border="single", focusable=false})<CR>]],
-        [[nnoremap <silent> ]g :lua vim.lsp.diagnostic.goto_next({border="single", focusable=false})<CR>]],
+        [[nnoremap <silent> [g :lua vim.lsp.diagnostic.goto_prev({popup_opts={border="single", focusable=false}})<CR>]],
+        [[nnoremap <silent> ]g :lua vim.lsp.diagnostic.goto_next({popup_opts={border="single", focusable=false}})<CR>]],
 
         [[autocmd CursorHold, CursorHoldI * :lua vim.lsp.diagnostic.show_line_diagnostic()<CR>]]
     }
