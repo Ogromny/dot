@@ -1,64 +1,43 @@
 vim.cmd [[packadd packer.nvim]]
 
 local packer = require "packer"
-local use = packer.use
 local config = require "plugins.config"
 
-vim.o.swapfile = false
-vim.o.signcolumn = "number"
-vim.o.relativenumber = true
-vim.o.hidden = true
-vim.o.tabstop = 4
-vim.o.shiftwidth = 4
-vim.o.expandtab = true
-vim.o.completeopt = "menu,menuone,noselect"
+local function config_name(name)
+    local pos = name:find("/")
+    if pos ~= nil then
+        name = name:sub(pos + 1)
+    end
 
-vim.cmd [[nnoremap <Up> <Nop>]]
-vim.cmd [[nnoremap <Down> <Nop>]]
-vim.cmd [[nnoremap <Left> <Nop>]]
-vim.cmd [[nnoremap <Right> <Nop>]]
+    pos = name:find(".", 1, true)
+    if pos ~= nil then
+        name = name:sub(1, pos - 1)
+    end
 
-vim.cmd [[autocmd BufRead,BufNewFile *.ha set ft=hare]]
-vim.cmd [[set expandtab]]
+    return name:gsub("-", "_")
+end
+
+local function use(name, options)
+    options = options or {}
+    options[1] = name
+    options["config"] = config[config_name(name)]
+
+    packer.use(options)
+end
 
 return packer.startup(function()
-    use {
-		"wbthomason/packer.nvim",
-		opt = true
-	}
-	use {
-		"folke/lsp-colors.nvim",
-		config = config.lsp_colors
-	}
-	use {
-		"folke/tokyonight.nvim",
-		config = config.tokyonight
-	}
-	-- use {
-	-- 	"EdenEast/nightfox.nvim",
-	-- 	config = config.nightfox
-	-- }
-	use {
-		"kyazdani42/nvim-web-devicons",
-		config = config.nvim_web_devicons
-	}
-    use {
-        "hoob3rt/lualine.nvim",
-		config = config.lualine
-    }
-	use {
-		"nvim-telescope/telescope.nvim",
-		requires = { "nvim-lua/plenary.nvim" },
-		config = config.telescope
-	}
-    use {
-        "lewis6991/gitsigns.nvim",
-        requires = { "nvim-lua/plenary.nvim" },
-		config = config.gitsigns
-    }
-	use {
-		"hrsh7th/nvim-cmp",
+	config.init()
+
+    use("wbthomason/packer.nvim", {opt = true})
+    use("hoob3rt/lualine.nvim")
+	use("folke/lsp-colors.nvim")
+	use("folke/tokyonight.nvim")
+	use("kyazdani42/nvim-web-devicons")
+	use("nvim-telescope/telescope.nvim", {requires = {"nvim-lua/plenary.nvim"}})
+    use("lewis6991/gitsigns.nvim", {requires = {"nvim-lua/plenary.nvim"}})
+	use("hrsh7th/nvim-cmp", {
 		requires = {
+            "onsails/lspkind-nvim",
 			"L3MON4D3/LuaSnip",
 			"saadparwaiz1/cmp_luasnip",
 			"rafamadriz/friendly-snippets",
@@ -66,54 +45,18 @@ return packer.startup(function()
 			"hrsh7th/cmp-path",
 			"hrsh7th/cmp-calc",
 			"hrsh7th/cmp-emoji"
-		},
-		config = config.cmp
-	}
-    use {
-        "neovim/nvim-lspconfig",
-		config = config.lspconfig
-    }
-	use {
-		"ray-x/lsp_signature.nvim",
-		config = config.lsp_signature
-	}
-    use {
-        "nvim-treesitter/nvim-treesitter",
+		}
+	})
+    use("neovim/nvim-lspconfig")
+	use("ray-x/lsp_signature.nvim")
+    use("nvim-treesitter/nvim-treesitter", {
         run = ":TSUpdate",
-		requires = { "nvim-treesitter/playground" },
-		config = config.treesitter
-    }
-    use {
-        "folke/todo-comments.nvim",
-        requires = { "nvim-lua/plenary.nvim" },
-		config = config.todo_comments
-    }
-	use {
-		"folke/trouble.nvim",
-		config = config.trouble
-	}
-	use {
-		"lukas-reineke/indent-blankline.nvim",
-		config = config.indent_blankline
-	}
-	use {
-		"windwp/nvim-autopairs",
-		config = config.autopairs
-	}
-	use {
-		"plasticboy/vim-markdown",
-		requires = { "godlygeek/tabular" },
-		config = config.markdown
-	}
-	use {
-		"jwalton512/vim-blade"
-	}
-	use {
-		"folke/which-key.nvim",
-		config = config.which_key
-	}
-    use {
-        "kristijanhusak/orgmode.nvim",
-        config = config.orgmode
-    }
+		requires = {"nvim-treesitter/playground"}
+    })
+    use("folke/todo-comments.nvim", {requires = {"nvim-lua/plenary.nvim"}})
+	use("folke/trouble.nvim")
+	use("lukas-reineke/indent-blankline.nvim")
+	use("windwp/nvim-autopairs")
+	use("jwalton512/vim-blade")
+	use("folke/which-key.nvim")
 end)
