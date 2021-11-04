@@ -14,13 +14,18 @@ local function config_name(name)
         name = name:sub(1, pos - 1)
     end
 
-    return name:gsub("-", "_")
+    return name:gsub("-", "_"):lower()
 end
 
 local function use(name, options)
     options = options or {}
     options[1] = name
-    options["config"] = config[config_name(name)]
+
+    if options["as"] ~= nil then
+        options["config"] = config[config_name(options["as"])]
+    else
+        options["config"] = config[config_name(name)]
+    end
 
     packer.use(options)
 end
@@ -31,7 +36,7 @@ return packer.startup(function()
     use("wbthomason/packer.nvim", {opt = true})
     use("hoob3rt/lualine.nvim")
 	use("folke/lsp-colors.nvim")
-	use("folke/tokyonight.nvim")
+	-- use("folke/tokyonight.nvim")
 	use("kyazdani42/nvim-web-devicons")
 	use("nvim-telescope/telescope.nvim", {requires = {"nvim-lua/plenary.nvim"}})
     use("lewis6991/gitsigns.nvim", {requires = {"nvim-lua/plenary.nvim"}})
@@ -59,4 +64,6 @@ return packer.startup(function()
 	use("windwp/nvim-autopairs")
 	use("jwalton512/vim-blade")
 	use("folke/which-key.nvim")
+    use("rose-pine/neovim", {as = "rose-pine"})
+    -- use("Pocco81/Catppuccino.nvim")
 end)

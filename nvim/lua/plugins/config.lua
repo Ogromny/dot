@@ -59,16 +59,15 @@ end
 function M.lualine()
 	require("lualine").setup {
 		options = {
-			theme = "tokyonight",
-			component_separators = {"", ""} -- {"", ""},
+			theme = "rose-pine",
+			component_separators = {left = "", right = ""}, -- {"", ""},
+            section_separators = {left = "", right = ""}
 		},
 		sections = {
-			lualine_x = {
-				{ "diagnostics", sources = {"nvim_lsp"} },
-				"encoding",
-				"fileformat",
-				"filetype"
-			}
+            lualine_b = {{"diagnostics", sources = {"nvim_lsp"}}},
+            lualine_c = {{"filename", path = 1}},
+			lualine_x = {"filetype"},
+            lualine_y = {},
 		}
 	}
 end
@@ -94,7 +93,7 @@ end
 function M.gitsigns()
 	require("gitsigns").setup {
 		numhl = true,
-		linehl = false,
+		linehl = true,
 		current_line_blame_opts = {
 			delay = 1000,
 			position = "eol"
@@ -310,6 +309,79 @@ end
 
 function M.which_key()
 	require("which-key").setup {}
+end
+
+function M.rose_pine()
+    local utils = require "../utils"
+    utils.set_global {
+        rose_pine_variant = "moon"
+    }
+
+    utils.cmd {
+        [[colorscheme rose-pine]]
+    }
+end
+
+function M.catppuccino()
+    require("catppuccino").setup {
+		colorscheme = "light_melya",
+		transparency = false,
+		term_colors = true,
+		styles = {
+			comments = "italic",
+			functions = "italic",
+			keywords = "italic",
+			strings = "italic",
+			variables = "italic",
+		},
+		integrations = {
+			treesitter = true,
+			native_lsp = {
+				enabled = true,
+				virtual_text = {
+					errors = "italic",
+					hints = "italic",
+					warnings = "italic",
+					information = "italic",
+				},
+				underlines = {
+					errors = "underline",
+					hints = "underline",
+					warnings = "underline",
+					information = "underline",
+				}
+			},
+			lsp_trouble = true,
+			lsp_saga = false,
+			gitgutter = false,
+			gitsigns = true,
+			telescope = true,
+			nvimtree = {
+				enabled = false,
+				show_root = false,
+			},
+			which_key = true,
+			indent_blankline = {
+				enabled = true,
+				colored_indent_levels = false,
+			},
+			dashboard = false,
+			neogit = false,
+			vim_sneak = false,
+			fern = false,
+			barbar = false,
+			bufferline = false,
+			markdown = false,
+			lightspeed = false,
+			ts_rainbow = false,
+			hop = false,
+		}
+	}
+
+    local utils = require "../utils"
+    utils.cmd {
+        [[colorscheme catppuccino]]
+    }
 end
 
 return M
