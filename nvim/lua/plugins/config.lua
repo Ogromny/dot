@@ -93,7 +93,7 @@ end
 function M.gitsigns()
 	require("gitsigns").setup {
 		numhl = true,
-		linehl = true,
+		linehl = false,
 		current_line_blame_opts = {
 			delay = 1000,
 			position = "eol"
@@ -103,6 +103,8 @@ end
 
 function M.nvim_cmp()
 	local cmp = require "cmp"
+    local luasnip = require "luasnip"
+
     cmp.setup {
         snippet = {
             expand = function(args)
@@ -119,6 +121,17 @@ function M.nvim_cmp()
         mapping = {
             ["<Tab>"] = cmp.mapping(cmp.mapping.select_next_item({behavior = cmp.SelectBehavior.Select}), {"i", "s"}),
             ["<S-Tab>"] = cmp.mapping(cmp.mapping.select_prev_item({behavior = cmp.SelectBehavior.Select}), {"i", "s"}),
+            -- snippy
+            ["<C-n>"] = cmp.mapping(function ()
+                if luasnip.expand_or_jumpable() then
+                    luasnip.expand_or_jump()
+                end
+            end, {"i", "s"}),
+            ["<C-p>"] = cmp.mapping(function ()
+                if luasnip.jumpable(-1) then
+                    luasnip.jump(-1)
+                end
+            end, {"i", "s"}),
             ["<C-Space>"] = cmp.mapping.complete(),
             ["<CR>"] = cmp.mapping.confirm()
         },
@@ -132,6 +145,9 @@ function M.nvim_cmp()
     }
 
 	require("cmp_nvim_lsp").setup()
+    luasnip.config.set_config { history = true }
+
+
 	require("luasnip/loaders/from_vscode").load {}
 end
 
@@ -249,13 +265,18 @@ function M.nvim_treesitter()
 		},
 		filetype = "hare"
 	}
+	parsers.blade = {
+		install_info = {
+			url = "~/Code/C/tree-sitter-blade",
+			files = {"src/parser.c"}
+		},
+		filetype = "blad"
+	}
 
 	require("nvim-treesitter.configs").setup {
 		-- ensure_installed = "all",
-		highlight = {
-			enable = true,
-		},
-		indent = { enable = true },
+		highlight = {enable = true},
+		indent = {enable = true},
 		playground = {
 			enable = true,
 			disable = {},
@@ -380,8 +401,13 @@ function M.catppuccino()
 
     local utils = require "../utils"
     utils.cmd {
-        [[colorscheme catppuccino]]
+        [[colorscheme catppuccino]],
+        [[highlight! NormalFloat guibg=None]]
     }
+end
+
+function M.twilight()
+    require("twilight").setup {}
 end
 
 return M
