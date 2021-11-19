@@ -265,13 +265,6 @@ function M.nvim_treesitter()
 		},
 		filetype = "hare"
 	}
-	parsers.blade = {
-		install_info = {
-			url = "~/Code/C/tree-sitter-blade",
-			files = {"src/parser.c"}
-		},
-		filetype = "blad"
-	}
 
 	require("nvim-treesitter.configs").setup {
 		-- ensure_installed = "all",
@@ -408,6 +401,27 @@ end
 
 function M.twilight()
     require("twilight").setup {}
+end
+
+function M.neogen()
+    require("neogen").setup {enabled = true}
+
+    local utils = require "../utils"
+    utils.cmd {
+        [[nnoremap <silent> <leader>d :lua require("neogen").generate()<CR>]],
+    }
+end
+
+function M.spaceless()
+    require("spaceless").setup()
+end
+
+function M.neoscroll()
+    require("neoscroll").setup {}
+end
+
+function M.mkdir()
+    require "mkdir"
 end
 
 return M
