@@ -15,10 +15,26 @@ input "1:1:AT_Translated_Set_2_keyboard" {
 	xkb_options	compose:ralt,grp:alt_shift_toggle
 }
 
+input "7847:2311:SEMITEK_USB-HID_Gaming_Keyboard" {
+	xkb_layout	us,ru
+	xkb_variant	euro,phonetic
+	xkb_options	compose:menu,grp:alt_shift_toggle
+}
+
+input *   xkb_layout	us,ru
+input * xkb_variant	euro,phonetic
+input * xkb_options compose:rctrl,grp:toggle
+
 input "1133:45915:MX_Keys_Keyboard" {
 	xkb_layout	us,ru
 	xkb_variant	euro,phonetic
 	xkb_options	compose:ralt,grp:alt_shift_toggle
+}
+
+input "65261:24673:OLKB_Preonic_Keyboard" {
+	xkb_layout	us,ru
+	xkb_variant	euro,phonetic
+	xkb_options	compose:lctrl
 }
 
 input "1133:45915:MX_Keys_Mouse" {
