@@ -49,7 +49,8 @@ return packer.startup(function()
 			"hrsh7th/cmp-nvim-lsp",
 			"hrsh7th/cmp-path",
 			"hrsh7th/cmp-calc",
-			"hrsh7th/cmp-emoji"
+			"hrsh7th/cmp-emoji",
+            "hrsh7th/cmp-nvim-lsp-document-symbol"
 		}
 	})
     use("neovim/nvim-lspconfig")
@@ -65,4 +66,5 @@ return packer.startup(function()
     -- use("Pocco81/Catppuccino.nvim")
     -- use("folke/twilight.nvim")
     use("lewis6991/spaceless.nvim")
+    use("lukas-reineke/virt-column.nvim")
 end)

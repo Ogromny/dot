@@ -46,7 +46,8 @@ function M.tokyonight()
     utils.cmd {
         [[colorscheme tokyonight]],
         [[highlight! NormalFloat guibg=None]],
-        [[highlight! link PmenuSel DiffText]]
+        [[highlight! link PmenuSel DiffText]],
+        [[highlight! clear ColorColumn]]
     }
 end
 
@@ -144,9 +145,12 @@ function M.nvim_cmp()
         }
     }
 
+    cmp.setup.cmdline("/", {
+        sources = cmp.config.sources({{name = "nvim_lsp_document_symbol"}}, {{name = "buffer"}})
+    })
+
 	require("cmp_nvim_lsp").setup()
     luasnip.config.set_config { history = true }
-
 
 	require("luasnip/loaders/from_vscode").load {}
 end
@@ -422,6 +426,18 @@ end
 
 function M.mkdir()
     require "mkdir"
+end
+
+function M.virt_column()
+    -- require("virt-column").setup {char = "┃"}
+
+    -- local utils = require "../utils"
+    -- utils.set {
+    --     colorcolumn = "80"
+    -- }
+    -- utils.cmd {
+    --     [[highlight! clear ColorColumn]]
+    -- }
 end
 
 return M
