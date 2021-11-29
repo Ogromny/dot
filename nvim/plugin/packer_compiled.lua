@@ -179,7 +179,7 @@ _G.packer_plugins = {
     url = "https://github.com/nvim-lua/plenary.nvim"
   },
   ["rose-pine"] = {
-    config = { "\27LJ\2\2ƒ\1\0\0\3\0\6\0\n6\0\0\0'\1\1\0B\0\2\0029\1\2\0005\2\3\0B\1\2\0019\1\4\0005\2\5\0B\1\2\1K\0\1\0\1\2\0\0\26colorscheme rose-pine\bcmd\1\0\1\22rose_pine_variant\tmoon\15set_global\r../utils\frequire\0" },
+    config = { "\27LJ\2\2Æ\5\0\0\r\0\n\0\0266\0\0\0'\1\1\0B\0\2\0029\1\2\0005\2\3\0B\1\2\0015\1\4\0006\2\5\0\18\3\1\0B\2\2\4H\5\t€9\a\6\0004\b\3\0'\t\a\0\18\n\5\0'\v\b\0\18\f\6\0&\t\f\t>\t\1\bB\a\2\1F\5\3\3R\5õ9\2\6\0005\3\t\0B\2\2\1K\0\1\0\1\2\0\0\26colorscheme rose-pine\6  highlight! link CmpItemKind\bcmd\npairs\1\0\25\tText\vTSText\rFunction\15TSFunction\rOperator\15TSOperator\nColor\vTSText\nClass\22TSVariableBuiltin\vModule\22TSVariableBuiltin\rConstant\15TSConstant\rProperty\15TSProperty\vMethod\15TSFunction\15EnumMember\fTSField\tUnit\14TSInclude\14Interface\22TSVariableBuiltin\vStruct\22TSVariableBuiltin\rVariable\15TSVariable\fSnippet\nTSTag\vFolder\vTSText\nEvent\vTSText\nField\fTSField\18TypeParameter\16TSParameter\tFile\14TSInclude\nValue\vTSText\16Constructor\18TSConstructor\tEnum\22TSVariableBuiltin\fKeyword\14TSKeyword\14Reference\15TSVariable\1\0\1\22rose_pine_variant\tmoon\15set_global\r../utils\frequire\0" },
     loaded = true,
     path = "/home/ogromny/.local/share/nvim/site/pack/packer/start/rose-pine",
     url = "https://github.com/rose-pine/neovim"
@@ -255,7 +255,7 @@ try_loadstring("\27LJ\2\2…\1\0\0\3\0\6\0\t6\0\0\0'\1\1\0B\0\2\0029\0\2\0005\1\3\
 time([[Config for gitsigns.nvim]], false)
 -- Config for: rose-pine
 time([[Config for rose-pine]], true)
-try_loadstring("\27LJ\2\2ƒ\1\0\0\3\0\6\0\n6\0\0\0'\1\1\0B\0\2\0029\1\2\0005\2\3\0B\1\2\0019\1\4\0005\2\5\0B\1\2\1K\0\1\0\1\2\0\0\26colorscheme rose-pine\bcmd\1\0\1\22rose_pine_variant\tmoon\15set_global\r../utils\frequire\0", "config", "rose-pine")
+try_loadstring("\27LJ\2\2Æ\5\0\0\r\0\n\0\0266\0\0\0'\1\1\0B\0\2\0029\1\2\0005\2\3\0B\1\2\0015\1\4\0006\2\5\0\18\3\1\0B\2\2\4H\5\t€9\a\6\0004\b\3\0'\t\a\0\18\n\5\0'\v\b\0\18\f\6\0&\t\f\t>\t\1\bB\a\2\1F\5\3\3R\5õ9\2\6\0005\3\t\0B\2\2\1K\0\1\0\1\2\0\0\26colorscheme rose-pine\6  highlight! link CmpItemKind\bcmd\npairs\1\0\25\tText\vTSText\rFunction\15TSFunction\rOperator\15TSOperator\nColor\vTSText\nClass\22TSVariableBuiltin\vModule\22TSVariableBuiltin\rConstant\15TSConstant\rProperty\15TSProperty\vMethod\15TSFunction\15EnumMember\fTSField\tUnit\14TSInclude\14Interface\22TSVariableBuiltin\vStruct\22TSVariableBuiltin\rVariable\15TSVariable\fSnippet\nTSTag\vFolder\vTSText\nEvent\vTSText\nField\fTSField\18TypeParameter\16TSParameter\tFile\14TSInclude\nValue\vTSText\16Constructor\18TSConstructor\tEnum\22TSVariableBuiltin\fKeyword\14TSKeyword\14Reference\15TSVariable\1\0\1\22rose_pine_variant\tmoon\15set_global\r../utils\frequire\0", "config", "rose-pine")
 time([[Config for rose-pine]], false)
 -- Config for: todo-comments.nvim
 time([[Config for todo-comments.nvim]], true)

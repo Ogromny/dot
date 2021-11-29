@@ -335,6 +335,40 @@ function M.rose_pine()
         rose_pine_variant = "moon"
     }
 
+    local kind = {
+        Text = "TSText",
+        Method = "TSFunction",
+        Function = "TSFunction",
+        Constructor = "TSConstructor",
+        Field = "TSField",
+        Variable = "TSVariable",
+        Class = "TSVariableBuiltin",
+        Interface = "TSVariableBuiltin",
+        Module = "TSVariableBuiltin",
+        Property = "TSProperty",
+        Unit = "TSInclude",
+        Value = "TSText",
+        Enum = "TSVariableBuiltin",
+        Keyword = "TSKeyword",
+        Snippet = "TSTag",
+        Color = "TSText",
+        File = "TSInclude",
+        Reference = "TSVariable",
+        Folder = "TSText",
+        EnumMember = "TSField",
+        Constant = "TSConstant",
+        Struct = "TSVariableBuiltin",
+        Event = "TSText",
+        Operator = "TSOperator",
+        TypeParameter = "TSParameter"
+    }
+
+    for key, value in pairs(kind) do
+        utils.cmd {
+            "highlight! link CmpItemKind" .. key .. " " .. value
+        }
+    end
+
     utils.cmd {
         [[colorscheme rose-pine]]
     }
