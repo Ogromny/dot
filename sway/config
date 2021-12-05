@@ -50,7 +50,8 @@ output eDP-1 {
 }
 
 output DP-1 {
-	scale 2
+	mode 2560x1440@144Hz
+	scale 1.25
 }
 
 output DP-2 {
@@ -119,12 +120,12 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
-bindsym XF86MonBrightnessUp exec light -s sysfs/backlight/intel_backlight -A 5
-bindsym XF86MonBrightnessDown exec light -s sysfs/backlight/intel_backlight -U 5
+bindsym XF86MonBrightnessUp exec sudo light -A 5
+bindsym XF86MonBrightnessDown exec sudo light -U 5
 
-bindsym XF86AudioRaiseVolume exec amixer sset Master 5%+
-bindsym XF86AudioLowerVolume exec amixer sset Master 5%-
-bindsym XF86AudioMute exec amixer sset Master 1+ toggle
+bindsym XF86AudioRaiseVolume exec pamixer -i 5
+bindsym XF86AudioLowerVolume exec pamixer -d 5
+bindsym XF86AudioMute exec pamixer -t
 
 popup_during_fullscreen leave_fullscreen
 default_border pixel 1
@@ -132,9 +133,11 @@ default_floating_border pixel 1
 hide_edge_borders smart
 floating_modifier $mod normal
 
-exec swaybg -i ~/Images/wallhaven-g7qz1l.png
+exec swaybg -i ~/Images/wallhaven-g7qz1l.jpg
 exec mako
 exec waybar
+exec pipewire
+exec pipewire-pulse
 exec sudo cpupower frequency-set -u 2.00GHz -g powersave
 
 set $gnome-schema org.gnome.desktop.interface
