@@ -19,6 +19,7 @@ function M.init()
         [[nnoremap <Right> <Nop>]],
 
         [[autocmd BufRead,BufNewFile *.ha set ft=hare]],
+        [[let mapleader=" "]]
     }
 end
 
@@ -60,12 +61,13 @@ end
 function M.lualine()
 	require("lualine").setup {
 		options = {
-			theme = "rose-pine",
+            -- theme = "kanagawa",
+            theme = "nightfox",
 			component_separators = {left = "", right = ""}, -- {"", ""},
             section_separators = {left = "", right = ""}
 		},
 		sections = {
-            lualine_b = {{"diagnostics", sources = {"nvim_lsp"}}},
+            lualine_b = {{"diagnostics", sources = {"nvim_diagnostic"}}},
             lualine_c = {{"filename", path = 1}},
 			lualine_x = {"filetype"},
             lualine_y = {},
@@ -172,6 +174,7 @@ function M.nvim_lspconfig()
 
 	local lspconfig = require "lspconfig"
 	lspconfig.clangd.setup {capabilities = capabilities}
+	lspconfig.gopls.setup {capabilities = capabilities}
 	lspconfig.html.setup {capabilities = capabilities}
 	lspconfig.cssls.setup {capabilities = capabilities}
 	lspconfig.jsonls.setup {capabilities = capabilities}
@@ -180,6 +183,15 @@ function M.nvim_lspconfig()
 	lspconfig.zls.setup {capabilities = capabilities}
 	lspconfig.kotlin_language_server.setup {capabilites = capabilities}
 	lspconfig.tsserver.setup {capabilities = capabilities}
+    lspconfig.nimls.setup {capabilities = capabilities}
+    lspconfig.jdtls.setup {
+        capabilities = capabilities,
+        cmd = {"jdtls"},
+        root_dir = function(fname)
+            return lspconfig.util.root_pattern("pom.xml", "gradle.build", ".git")(fname)
+                or vim.fn.getcwd()
+        end
+    }
 	lspconfig.vuels.setup {
         capabilities = capabilities,
         init_options = {
@@ -472,6 +484,57 @@ function M.virt_column()
     -- utils.cmd {
     --     [[highlight! clear ColorColumn]]
     -- }
+end
+
+function M.kanagawa()
+    local utils = require "../utils"
+    -- local kind = {
+    --     Text = "TSText",
+    --     Method = "TSFunction",
+    --     Function = "TSFunction",
+    --     Constructor = "TSConstructor",
+    --     Field = "TSField",
+    --     Variable = "TSVariable",
+    --     Class = "TSVariableBuiltin",
+    --     Interface = "TSVariableBuiltin",
+    --     Module = "TSVariableBuiltin",
+    --     Property = "TSProperty",
+    --     Unit = "TSInclude",
+    --     Value = "TSText",
+    --     Enum = "TSVariableBuiltin",
+    --     Keyword = "TSKeyword",
+    --     Snippet = "TSTag",
+    --     Color = "TSText",
+    --     File = "TSInclude",
+    --     Reference = "TSVariable",
+    --     Folder = "TSText",
+    --     EnumMember = "TSField",
+    --     Constant = "TSConstant",
+    --     Struct = "TSVariableBuiltin",
+    --     Event = "TSText",
+    --     Operator = "TSOperator",
+    --     TypeParameter = "TSParameter"
+    -- }
+    -- for key, value in pairs(kind) do
+    --     utils.cmd {
+    --         "highlight! link CmpItemKind" .. key .. " " .. value
+    --     }
+    -- end
+
+    utils.cmd {
+        [[colorscheme kanagawa]]
+    }
+end
+
+function M.figdet()
+    require("fidget").setup {}
+end
+
+function M.nightfox()
+    local utils = require "../utils"
+    utils.cmd {
+        [[colorscheme nordfox]]
+    }
 end
 
 return M
