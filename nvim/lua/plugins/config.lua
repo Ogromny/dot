@@ -265,7 +265,7 @@ function M.nvim_lspconfig()
     vim.api.nvim_set_keymap("n", "[g", ":lua vim.lsp.diagnostic.goto_prev(" .. window_opts .. ")<CR>", opts)
     vim.api.nvim_set_keymap("n", "]g", ":lua vim.lsp.diagnostic.goto_next(" .. window_opts .. ")<CR>", opts)
 
-    vim.nvim_create_autocmd("CursorHold,CursorHoldI", {
+    vim.api.nvim_create_autocmd("CursorHold,CursorHoldI", {
         pattern = "*",
         callback = function ()
             vim.diagnostic.show()
@@ -347,6 +347,18 @@ end
 
 function M.nightfox()
     vim.cmd "colorscheme nordfox"
+end
+
+function M.move()
+    local opts = {silent = true, noremap = true}
+    vim.api.nvim_set_keymap("n", "<C-k>", ":MoveLine(-1)<CR>", opts)
+    vim.api.nvim_set_keymap("n", "<C-j>", ":MoveLine(1)<CR>", opts)
+    vim.api.nvim_set_keymap("v", "<C-k>", ":MoveBlock(-1)<CR>", opts)
+    vim.api.nvim_set_keymap("v", "<C-j>", ":MoveBlock(1)<CR>", opts)
+    vim.api.nvim_set_keymap('n', '<C-l>', ":MoveHChar(1)<CR>", opts)
+    vim.api.nvim_set_keymap('n', '<C-h>', ":MoveHChar(-1)<CR>", opts)
+    vim.api.nvim_set_keymap('v', '<C-l>', ":MoveHBlock(1)<CR>", opts)
+    vim.api.nvim_set_keymap('v', '<C-h>', ":MoveHBlock(-1)<CR>", opts)
 end
 
 return M
