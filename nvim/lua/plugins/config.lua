@@ -1,55 +1,60 @@
 local M = {}
 
 function M.init()
-    local utils = require "../utils"
-    utils.set {
-        swapfile = false,
-        signcolumn = "number",
-        relativenumber = true,
-        hidden = true,
-        tabstop = 4,
-        shiftwidth = 4,
-        expandtab = true,
-        completeopt = "menu,menuone,noselect"
-    }
-    utils.cmd {
-        [[nnoremap <Up> <Nop>]],
-        [[nnoremap <Down> <Nop>]],
-        [[nnoremap <Left> <Nop>]],
-        [[nnoremap <Right> <Nop>]],
+    vim.o.swapfile = false
+    vim.o.signcolumn = "number"
+    vim.o.relativenumber = true
+    vim.o.hidden = true
+    vim.o.tabstop = 4
+    vim.o.shiftwidth = 4
+    vim.o.expandtab = true
+    vim.o.completeopt = "menu,menuone,noselect"
+    vim.o.laststatus = 3
 
-        [[autocmd BufRead,BufNewFile *.ha set ft=hare]],
-        [[let mapleader=" "]]
+    vim.g.mapleader = " "
+
+    vim.api.nvim_set_keymap("n", "<Up>", "<Nop>", {})
+    vim.api.nvim_set_keymap("n", "<Down>", "<Nop>", {})
+    vim.api.nvim_set_keymap("n", "<Left>", "<Nop>", {})
+    vim.api.nvim_set_keymap("n", "<Right>", "<Nop>", {})
+
+    local kind = {
+        Text = "TSText",
+        Method = "TSFunction",
+        Function = "TSFunction",
+        Constructor = "TSConstructor",
+        Field = "TSField",
+        Variable = "TSVariable",
+        Class = "TSVariableBuiltin",
+        Interface = "TSVariableBuiltin",
+        Module = "TSVariableBuiltin",
+        Property = "TSProperty",
+        Unit = "TSInclude",
+        Value = "TSText",
+        Enum = "TSVariableBuiltin",
+        Keyword = "TSKeyword",
+        Snippet = "TSTag",
+        Color = "TSText",
+        File = "TSInclude",
+        Reference = "TSVariable",
+        Folder = "TSText",
+        EnumMember = "TSField",
+        Constant = "TSConstant",
+        Struct = "TSVariableBuiltin",
+        Event = "TSText",
+        Operator = "TSOperator",
+        TypeParameter = "TSParameter"
     }
+
+    for key, value in pairs(kind) do
+        vim.cmd("highlight! link CmpItemKind" .. key .. " " .. value)
+    end
+
+    vim.cmd "highlight! NormalFloat guibg=None"
 end
 
 function M.lsp_colors()
 	require("lsp-colors").setup {}
-end
-
-function M.tokyonight()
-    local utils = require "../utils"
-    utils.set_global {
-        tokyonight_style = "storm",
-        tokyonight_terminal_colors = true,
-        tokyonight_italic_comments = true,
-        tokyonight_italic_keywords = true,
-        tokyonight_italic_functions = true,
-        tokyonight_italic_variables = true,
-        tokyonight_transparent = false,
-        tokyonight_hide_inactive_statusline = false,
-        tokyonight_sidebars = {},
-        tokyonight_transparent_sidebar = false,
-        tokyonight_dark_sidebar = true,
-        tokyonight_dark_float = true,
-        tokyonight_lualine_bold = true
-    }
-    utils.cmd {
-        [[colorscheme tokyonight]],
-        [[highlight! NormalFloat guibg=None]],
-        [[highlight! link PmenuSel DiffText]],
-        [[highlight! clear ColorColumn]]
-    }
 end
 
 function M.nvim_web_devicons()
@@ -61,10 +66,10 @@ end
 function M.lualine()
 	require("lualine").setup {
 		options = {
-            -- theme = "kanagawa",
             theme = "nightfox",
 			component_separators = {left = "", right = ""}, -- {"", ""},
-            section_separators = {left = "", right = ""}
+            section_separators = {left = "", right = ""},
+            globalstatus = true
 		},
 		sections = {
             lualine_b = {{"diagnostics", sources = {"nvim_diagnostic"}}},
@@ -85,12 +90,10 @@ function M.telescope()
 		}
 	}
 
-    local utils = require "../utils"
-    utils.cmd {
-        [[nnoremap <silent> <leader><leader> :Telescope find_files<CR>]],
-        [[nnoremap <silent> <leader>g :Telescope live_grep<CR>]],
-        [[nnoremap <silent> <leader>b :Telescope buffers<CR>]]
-    }
+    local opts = {silent = true, noremap = true}
+    vim.api.nvim_set_keymap("n", "<leader><leader>", ":Telescope find_files<CR>", opts)
+    vim.api.nvim_set_keymap("n", "<leader>g", ":Telescope live_grep<CR>", opts)
+    vim.api.nvim_set_keymap("n", "<leader>b", ":Telescope buffers<CR>", opts)
 end
 
 function M.gitsigns()
@@ -114,17 +117,18 @@ function M.nvim_cmp()
                 require("luasnip").lsp_expand(args.body)
             end
         },
-        documentation = {
-            border = { "┌", "─", "┐", "│", "┘", "─", "└", "│" },
-            winhighlight = "FloatBorder:FloatBorder"
-        },
         formatting = {
             format = require("lspkind").cmp_format()
         },
         mapping = {
-            ["<Tab>"] = cmp.mapping(cmp.mapping.select_next_item({behavior = cmp.SelectBehavior.Select}), {"i", "s"}),
-            ["<S-Tab>"] = cmp.mapping(cmp.mapping.select_prev_item({behavior = cmp.SelectBehavior.Select}), {"i", "s"}),
-            -- snippy
+            ["<Tab>"] = cmp.mapping(
+                cmp.mapping.select_next_item({behavior = cmp.SelectBehavior.Select}),
+                {"i", "s"}
+            ),
+            ["<S-Tab>"] = cmp.mapping(
+                cmp.mapping.select_prev_item({behavior = cmp.SelectBehavior.Select}),
+                {"i", "s"}
+            ),
             ["<C-n>"] = cmp.mapping(function ()
                 if luasnip.expand_or_jumpable() then
                     luasnip.expand_or_jump()
@@ -138,6 +142,9 @@ function M.nvim_cmp()
             ["<C-Space>"] = cmp.mapping.complete(),
             ["<CR>"] = cmp.mapping.confirm()
         },
+        experimental = {
+            ghost_text = true
+        },
         sources = {
             {name = "nvim_lsp"},
             {name = "luasnip"},
@@ -147,13 +154,9 @@ function M.nvim_cmp()
         }
     }
 
-    cmp.setup.cmdline("/", {
-        sources = cmp.config.sources({{name = "nvim_lsp_document_symbol"}}, {{name = "buffer"}})
-    })
-
 	require("cmp_nvim_lsp").setup()
-    luasnip.config.set_config { history = true }
 
+    luasnip.config.set_config { history = true }
 	require("luasnip/loaders/from_vscode").load {}
 end
 
@@ -213,6 +216,21 @@ function M.nvim_lspconfig()
             }
         }
     }
+    lspconfig.yamlls.setup {
+        capabilities = capabilities,
+        settings = {
+            yaml = {
+                schemas = {
+                  ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "docker-compose.{yml,yaml}"
+                }
+            },
+            redhat = {
+                telemetry = {
+                    enabled = false
+                }
+            }
+        }
+    }
 
     local runtime_path = vim.split(package.path, ";")
     table.insert(runtime_path, "lua/?.lua")
@@ -233,27 +251,28 @@ function M.nvim_lspconfig()
         }
     }
 
-    local utils = require "../utils"
-    utils.cmd {
-        [[nnoremap <silent> gD :lua vim.lsp.buf.declaration()<CR>]],
-        [[nnoremap <silent> gd :lua vim.lsp.buf.definition()<CR>]],
-        [[nnoremap <silent> K :lua vim.lsp.buf.hover()<CR>]],
-        [[nnoremap <silent> gi :lua vim.lsp.buf.implementation()<CR>]],
-        [[nnoremap <silent> gr :lua vim.lsp.buf.references()<CR>]],
-        [[nnoremap <silent> <leader>ac :lua vim.lsp.buf.code_action()<CR>]],
-        [[vnoremap <silent> <leader>ac :lua vim.lsp.buf.range_code_action()<CR>]],
-        [[nnoremap <silent> <leader>r :lua vim.lsp.buf.rename()<CR>]],
-        [[nnoremap <silent> <leader>f :lua vim.lsp.buf.formatting()<CR>]],
-        [[nnoremap <silent> [g :lua vim.lsp.diagnostic.goto_prev({popup_opts={border="single", focusable=false}})<CR>]],
-        [[nnoremap <silent> ]g :lua vim.lsp.diagnostic.goto_next({popup_opts={border="single", focusable=false}})<CR>]],
+    local opts = {silent = true, noremap = true}
+    local window_opts = "{popup_opts={border='single',focusable=false}}"
+    vim.api.nvim_set_keymap("n", "gD", ":lua vim.lsp.buf.declaration()<CR>", opts)
+    vim.api.nvim_set_keymap("n", "gd", ":lua vim.lsp.buf.definition()<CR>", opts)
+    vim.api.nvim_set_keymap("n", "K", ":lua vim.lsp.buf.hover()<CR>", opts)
+    vim.api.nvim_set_keymap("n", "gi", ":lua vim.lsp.buf.implementation()<CR>", opts)
+    vim.api.nvim_set_keymap("n", "gr", ":lua vim.lsp.buf.references()<CR>", opts)
+    vim.api.nvim_set_keymap("n", "<leader>ac", ":lua vim.lsp.buf.code_action()<CR>", opts)
+    vim.api.nvim_set_keymap("v", "<leader>ac", ":lua vim.lsp.buf.range_code_action()<CR>", opts)
+    vim.api.nvim_set_keymap("n", "<leader>r", ":lua vim.lsp.buf.rename()<CR>", opts)
+    vim.api.nvim_set_keymap("n", "<leader>f", ":lua vim.lsp.buf.formatting()<CR>", opts)
+    vim.api.nvim_set_keymap("n", "[g", ":lua vim.lsp.diagnostic.goto_prev(" .. window_opts .. ")<CR>", opts)
+    vim.api.nvim_set_keymap("n", "]g", ":lua vim.lsp.diagnostic.goto_next(" .. window_opts .. ")<CR>", opts)
 
-        [[autocmd CursorHold, CursorHoldI * :lua vim.lsp.diagnostic.show_line_diagnostic()<CR>]]
-    }
+    vim.nvim_create_autocmd("CursorHold,CursorHoldI", {
+        pattern = "*",
+        callback = function ()
+            vim.diagnostic.show()
+        end
+    })
 
-    utils.set {
-        updatetime = 300
-    }
-
+    vim.o.updatetime = 300
 	vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
 		vim.lsp.handlers.hover,
 		{border = "single", focusable = false}
@@ -263,11 +282,10 @@ end
 function M.lsp_signature()
 	require("lsp_signature").setup {
 		bind = true,
-		doc_lines = 5,
-		hint_prefix = "🍺 ",
-		handler_opts = {
-			border = { "┌", "─", "┐", "│", "┘", "─", "└", "│" }
-		},
+		doc_lines = 10,
+        handler_opts = {
+            border = "single"
+        },
 		trigger_on_newline = true
 	}
 end
@@ -283,7 +301,6 @@ function M.nvim_treesitter()
 	}
 
 	require("nvim-treesitter.configs").setup {
-		-- ensure_installed = "all",
 		highlight = {enable = true},
 		indent = {enable = true},
 		playground = {
@@ -306,224 +323,22 @@ function M.nvim_treesitter()
 		}
 	}
 
-    local utils = require "../utils"
-    utils.set {
-        foldmethod = "expr",
-        foldexpr = "nvim_treesitter#foldexpr()",
-        foldlevelstart = 99
-    }
+    vim.o.foldmethod = "expr"
+    vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+    vim.o.foldlevelstart = 99
 end
 
 function M.todo_comments()
 	require("todo-comments").setup {}
-    local utils = require "../utils"
-    utils.set {
-        signcolumn = "yes"
-    }
-end
-
-function M.trouble()
-	require("trouble").setup {}
-end
-
-function M.indent_blankline()
-	require("indent_blankline").setup {}
-end
-
-function M.nvim_autopairs()
-	-- require("nvim-autopairs").setup {
-	-- 	enable_check_bracket_line = false,
-	-- 	check_ts = true
-	-- }
+    vim.o.signcolumn = "yes"
 end
 
 function M.which_key()
 	require("which-key").setup {}
 end
 
-function M.rose_pine()
-    local utils = require "../utils"
-    utils.set_global {
-        rose_pine_variant = "moon"
-    }
-
-    local kind = {
-        Text = "TSText",
-        Method = "TSFunction",
-        Function = "TSFunction",
-        Constructor = "TSConstructor",
-        Field = "TSField",
-        Variable = "TSVariable",
-        Class = "TSVariableBuiltin",
-        Interface = "TSVariableBuiltin",
-        Module = "TSVariableBuiltin",
-        Property = "TSProperty",
-        Unit = "TSInclude",
-        Value = "TSText",
-        Enum = "TSVariableBuiltin",
-        Keyword = "TSKeyword",
-        Snippet = "TSTag",
-        Color = "TSText",
-        File = "TSInclude",
-        Reference = "TSVariable",
-        Folder = "TSText",
-        EnumMember = "TSField",
-        Constant = "TSConstant",
-        Struct = "TSVariableBuiltin",
-        Event = "TSText",
-        Operator = "TSOperator",
-        TypeParameter = "TSParameter"
-    }
-
-    for key, value in pairs(kind) do
-        utils.cmd {
-            "highlight! link CmpItemKind" .. key .. " " .. value
-        }
-    end
-
-    utils.cmd {
-        [[colorscheme rose-pine]]
-    }
-end
-
-function M.catppuccino()
-    require("catppuccino").setup {
-		colorscheme = "light_melya",
-		transparency = false,
-		term_colors = true,
-		styles = {
-			comments = "italic",
-			functions = "italic",
-			keywords = "italic",
-			strings = "italic",
-			variables = "italic",
-		},
-		integrations = {
-			treesitter = true,
-			native_lsp = {
-				enabled = true,
-				virtual_text = {
-					errors = "italic",
-					hints = "italic",
-					warnings = "italic",
-					information = "italic",
-				},
-				underlines = {
-					errors = "underline",
-					hints = "underline",
-					warnings = "underline",
-					information = "underline",
-				}
-			},
-			lsp_trouble = true,
-			lsp_saga = false,
-			gitgutter = false,
-			gitsigns = true,
-			telescope = true,
-			nvimtree = {
-				enabled = false,
-				show_root = false,
-			},
-			which_key = true,
-			indent_blankline = {
-				enabled = true,
-				colored_indent_levels = false,
-			},
-			dashboard = false,
-			neogit = false,
-			vim_sneak = false,
-			fern = false,
-			barbar = false,
-			bufferline = false,
-			markdown = false,
-			lightspeed = false,
-			ts_rainbow = false,
-			hop = false,
-		}
-	}
-
-    local utils = require "../utils"
-    utils.cmd {
-        [[colorscheme catppuccino]],
-        [[highlight! NormalFloat guibg=None]]
-    }
-end
-
-function M.twilight()
-    require("twilight").setup {}
-end
-
-function M.neogen()
-    require("neogen").setup {enabled = true}
-
-    local utils = require "../utils"
-    utils.cmd {
-        [[nnoremap <silent> <leader>d :lua require("neogen").generate()<CR>]],
-    }
-end
-
 function M.spaceless()
     require("spaceless").setup()
-end
-
-function M.neoscroll()
-    require("neoscroll").setup {}
-end
-
-function M.mkdir()
-    require "mkdir"
-end
-
-function M.virt_column()
-    -- require("virt-column").setup {char = "┃"}
-
-    -- local utils = require "../utils"
-    -- utils.set {
-    --     colorcolumn = "80"
-    -- }
-    -- utils.cmd {
-    --     [[highlight! clear ColorColumn]]
-    -- }
-end
-
-function M.kanagawa()
-    local utils = require "../utils"
-    -- local kind = {
-    --     Text = "TSText",
-    --     Method = "TSFunction",
-    --     Function = "TSFunction",
-    --     Constructor = "TSConstructor",
-    --     Field = "TSField",
-    --     Variable = "TSVariable",
-    --     Class = "TSVariableBuiltin",
-    --     Interface = "TSVariableBuiltin",
-    --     Module = "TSVariableBuiltin",
-    --     Property = "TSProperty",
-    --     Unit = "TSInclude",
-    --     Value = "TSText",
-    --     Enum = "TSVariableBuiltin",
-    --     Keyword = "TSKeyword",
-    --     Snippet = "TSTag",
-    --     Color = "TSText",
-    --     File = "TSInclude",
-    --     Reference = "TSVariable",
-    --     Folder = "TSText",
-    --     EnumMember = "TSField",
-    --     Constant = "TSConstant",
-    --     Struct = "TSVariableBuiltin",
-    --     Event = "TSText",
-    --     Operator = "TSOperator",
-    --     TypeParameter = "TSParameter"
-    -- }
-    -- for key, value in pairs(kind) do
-    --     utils.cmd {
-    --         "highlight! link CmpItemKind" .. key .. " " .. value
-    --     }
-    -- end
-
-    utils.cmd {
-        [[colorscheme kanagawa]]
-    }
 end
 
 function M.figdet()
@@ -531,10 +346,7 @@ function M.figdet()
 end
 
 function M.nightfox()
-    local utils = require "../utils"
-    utils.cmd {
-        [[colorscheme nordfox]]
-    }
+    vim.cmd "colorscheme nordfox"
 end
 
 return M

@@ -36,7 +36,6 @@ return packer.startup(function()
     use("wbthomason/packer.nvim", {opt = true})
     use("hoob3rt/lualine.nvim")
 	use("folke/lsp-colors.nvim")
-	-- use("folke/tokyonight.nvim")
 	use("kyazdani42/nvim-web-devicons")
 	use("nvim-telescope/telescope.nvim", {requires = {"nvim-lua/plenary.nvim"}})
     use("lewis6991/gitsigns.nvim", {requires = {"nvim-lua/plenary.nvim"}})
@@ -50,7 +49,7 @@ return packer.startup(function()
 			"hrsh7th/cmp-path",
 			"hrsh7th/cmp-calc",
 			"hrsh7th/cmp-emoji",
-            "hrsh7th/cmp-nvim-lsp-document-symbol"
+            "hrsh7th/cmp-nvim-lsp-signature-help"
 		}
 	})
     use("neovim/nvim-lspconfig")
@@ -60,16 +59,9 @@ return packer.startup(function()
 		requires = {"nvim-treesitter/playground"}
     })
     use("folke/todo-comments.nvim", {requires = {"nvim-lua/plenary.nvim"}})
-	-- use("lukas-reineke/indent-blankline.nvim")
 	use("folke/which-key.nvim")
-    -- use("rose-pine/neovim", {as = "rose-pine"})
-    -- use("Pocco81/Catppuccino.nvim")
-    -- use("folke/twilight.nvim")
     use("lewis6991/spaceless.nvim")
-    use("lukas-reineke/virt-column.nvim")
     use("Tetralux/odin.vim")
-    -- use("rebelot/kanagawa.nvim")
-    -- use("zah/nim.vim.git")
     use("j-hui/fidget.nvim")
     use("EdenEast/nightfox.nvim")
 end)
