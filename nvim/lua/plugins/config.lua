@@ -64,18 +64,60 @@ function M.nvim_web_devicons()
 end
 
 function M.lualine()
+    local empty = {
+        function ()
+            return " "
+        end,
+        padding = { left = 1 },
+        color = "lualine_c_normal"
+    }
+
 	require("lualine").setup {
 		options = {
-            theme = "nightfox",
-			component_separators = {left = "", right = ""}, -- {"", ""},
-            section_separators = {left = "", right = ""},
+			component_separators = "",
+            section_separators = "",
             globalstatus = true
 		},
 		sections = {
-            lualine_b = {{"diagnostics", sources = {"nvim_diagnostic"}}},
-            lualine_c = {{"filename", path = 1}},
-			lualine_x = {"filetype"},
-            lualine_y = {},
+            lualine_a = {
+                {
+                    "mode",
+                    separator = { left = "" }
+                }
+            },
+            lualine_b = {
+                {
+                    "diagnostics",
+                    separator = { right = "" },
+                    sources = { "nvim_diagnostic" },
+                    update_in_insert = true,
+                    always_visible = true
+                }
+            },
+            lualine_c = {
+                "%=",
+                {
+                    "filename",
+                    path = 1
+                }
+            },
+            lualine_x = {
+                {
+                    "filetype"
+                }
+            },
+			lualine_y = {
+                {
+                    "location",
+                    separator = { left = "" }
+                }
+            },
+            lualine_z = {
+                {
+                    "progress",
+                    separator = { right = "" }
+                }
+            }
 		}
 	}
 end
@@ -262,13 +304,13 @@ function M.nvim_lspconfig()
     vim.api.nvim_set_keymap("v", "<leader>ac", ":lua vim.lsp.buf.range_code_action()<CR>", opts)
     vim.api.nvim_set_keymap("n", "<leader>r", ":lua vim.lsp.buf.rename()<CR>", opts)
     vim.api.nvim_set_keymap("n", "<leader>f", ":lua vim.lsp.buf.formatting()<CR>", opts)
-    vim.api.nvim_set_keymap("n", "[g", ":lua vim.lsp.diagnostic.goto_prev(" .. window_opts .. ")<CR>", opts)
-    vim.api.nvim_set_keymap("n", "]g", ":lua vim.lsp.diagnostic.goto_next(" .. window_opts .. ")<CR>", opts)
+    vim.api.nvim_set_keymap("n", "[g", ":lua vim.diagnostic.goto_prev(" .. window_opts .. ")<CR>", opts)
+    vim.api.nvim_set_keymap("n", "]g", ":lua vim.diagnostic.goto_next(" .. window_opts .. ")<CR>", opts)
 
     vim.api.nvim_create_autocmd("CursorHold,CursorHoldI", {
         pattern = "*",
         callback = function ()
-            vim.diagnostic.show()
+            vim.diagnostic.open_float()
         end
     })
 
