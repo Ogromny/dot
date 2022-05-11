@@ -37,7 +37,10 @@ return packer.startup(function()
     use("hoob3rt/lualine.nvim")
 	use("folke/lsp-colors.nvim")
 	use("kyazdani42/nvim-web-devicons")
-	use("nvim-telescope/telescope.nvim", {requires = {"nvim-lua/plenary.nvim"}})
+	use("nvim-telescope/telescope.nvim", {
+        requires = {"nvim-lua/plenary.nvim"},
+        after ="nightfox.nvim"
+    })
     use("lewis6991/gitsigns.nvim", {requires = {"nvim-lua/plenary.nvim"}})
 	use("hrsh7th/nvim-cmp", {
 		requires = {

@@ -128,7 +128,16 @@ function M.telescope()
 			file_ignore_patterns = {
 				"node_modules",
 				"vendor"
-			}
+			},
+            layout_config = {
+                horizontal = {
+                    prompt_position = "top",
+                }
+            },
+            borderchars = {" ", " ", " ", " ", " ", " ", " ", " "},
+            prompt_prefix = "   ",
+            selection_caret = "  ",
+            entry_prefix = "  "
 		}
 	}
 
@@ -136,6 +145,15 @@ function M.telescope()
     vim.api.nvim_set_keymap("n", "<leader><leader>", ":Telescope find_files<CR>", opts)
     vim.api.nvim_set_keymap("n", "<leader>g", ":Telescope live_grep<CR>", opts)
     vim.api.nvim_set_keymap("n", "<leader>b", ":Telescope buffers<CR>", opts)
+
+    vim.cmd "highlight! link TelescopePreviewTitle DiagnosticVirtualTextHint"
+    vim.cmd "highlight! link TelescopePromptTitle DiagnosticVirtualTextInfo"
+    vim.cmd "highlight! link TelescopeResultsNormal NormalFloat"
+    vim.cmd "highlight! link TelescopePreviewNormal NormalFloat"
+    vim.cmd "highlight! link TelescopePromptNormal Visual"
+    vim.cmd "highlight! link TelescopePromptBorder Visual"
+    vim.cmd "highlight! link TelescopeBorder NormalFloat"
+    vim.cmd "highlight! TelescopeResultsTitle guifg=#232831"
 end
 
 function M.gitsigns()
@@ -152,6 +170,7 @@ end
 function M.nvim_cmp()
 	local cmp = require "cmp"
     local luasnip = require "luasnip"
+    local lspkind = require "lspkind"
 
     cmp.setup {
         snippet = {
@@ -160,7 +179,13 @@ function M.nvim_cmp()
             end
         },
         formatting = {
-            format = require("lspkind").cmp_format()
+            fields = {"kind", "abbr", "menu"},
+            format = function(_, item)
+                item.menu = item.kind
+                item.kind = lspkind.symbolic(item.kind)
+                return item
+            end,
+            -- format = require("lspkind").cmp_format()
         },
         mapping = {
             ["<Tab>"] = cmp.mapping(
@@ -294,7 +319,12 @@ function M.nvim_lspconfig()
     }
 
     local opts = {silent = true, noremap = true}
-    local window_opts = "{popup_opts={border='single',focusable=false}}"
+    local popup_opts = "{popup_opts={border='single'}}"
+    vim.diagnostic.config {
+        float = {
+            focusable = false
+        }
+    }
     vim.api.nvim_set_keymap("n", "gD", ":lua vim.lsp.buf.declaration()<CR>", opts)
     vim.api.nvim_set_keymap("n", "gd", ":lua vim.lsp.buf.definition()<CR>", opts)
     vim.api.nvim_set_keymap("n", "K", ":lua vim.lsp.buf.hover()<CR>", opts)
@@ -304,8 +334,8 @@ function M.nvim_lspconfig()
     vim.api.nvim_set_keymap("v", "<leader>ac", ":lua vim.lsp.buf.range_code_action()<CR>", opts)
     vim.api.nvim_set_keymap("n", "<leader>r", ":lua vim.lsp.buf.rename()<CR>", opts)
     vim.api.nvim_set_keymap("n", "<leader>f", ":lua vim.lsp.buf.formatting()<CR>", opts)
-    vim.api.nvim_set_keymap("n", "[g", ":lua vim.diagnostic.goto_prev(" .. window_opts .. ")<CR>", opts)
-    vim.api.nvim_set_keymap("n", "]g", ":lua vim.diagnostic.goto_next(" .. window_opts .. ")<CR>", opts)
+    vim.api.nvim_set_keymap("n", "[g", ":lua vim.diagnostic.goto_prev(" .. popup_opts .. ")<CR>", opts)
+    vim.api.nvim_set_keymap("n", "]g", ":lua vim.diagnostic.goto_next(" .. popup_opts .. ")<CR>", opts)
 
     vim.api.nvim_create_autocmd("CursorHold,CursorHoldI", {
         pattern = "*",
