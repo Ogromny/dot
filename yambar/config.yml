@@ -1,0 +1,116 @@
+# catppuccin latte
+color_base: &color_base 303446ff
+color_text: &color_text c6d0f5ff
+color_transparent: &color_transparent 00000000
+color_red: &color_red e78284ff
+color_green: &color_green a6d189ff
+color_yellow: &color_yellow e5c890ff
+color_blue: &color_blue 8caaeeff
+
+bar_margin: &bar_margin 20
+
+particle_margin: &particle_margin 20
+particle_spacing: &particle_spacing 25
+
+i3_margin: &i3_margin 15
+
+bar:
+  height: 48
+  location: top
+  background: *color_transparent
+  margin: 0
+  spacing: 0
+  border:
+    margin: *bar_margin
+    bottom-margin: 0
+    width: 0
+  font: "ComicCodeLigatures Nerd Font:pixelsize=32"
+  foreground: *color_text
+
+  left:
+    - i3:
+        sort: ascending
+        anchors:
+          i3_default: &i3_default
+            text: "{name}"
+            margin: *i3_margin
+            deco:
+              background:
+                color: *color_base
+        content:
+          "":
+            map:
+              tag: state
+              default:
+                string:
+                  <<: *i3_default
+              values:
+                urgent:
+                  string:
+                    <<: *i3_default
+                    foreground: *color_red
+                focused:
+                  string:
+                    <<: *i3_default
+                    foreground: *color_blue
+
+  right:
+    - script:
+        path: "/home/ogromny/.config/yambar/scripts/xkb_layout_to_flag.sh"
+        content:
+          string:
+            text: "{layout}"
+            left-margin: *particle_margin
+            right-margin: *particle_spacing
+            deco:
+              background:
+                color: *color_base
+    - battery:
+        name: "BAT0"
+        anchors:
+          discharging: &battery_discharging
+            list:
+              items:
+                - ramp:
+                    tag: capacity
+                    items:
+                      - string: {text:  , foreground: *color_red}
+                      - string: {text:  , foreground: *color_yellow}
+                      - string: {text:  }
+                      - string: {text:  }
+                      - string: {text:  }
+                      - string: {text:  }
+                      - string: {text:  }
+                      - string: {text:  }
+                      - string: {text:  }
+                      - string: {text:  , foreground: *color_green}
+                - string: {text: " {capacity}%"}
+        content:
+          map:
+            tag: state
+            values:
+              unknown:
+                <<: *battery_discharging
+              discharging:
+                <<: *battery_discharging
+              charging:
+                - string: {text: , foreground: *color_green}
+                - string: {text: " {capacity}%"}
+              full:
+                - string: {text: , foreground: *color_green}
+                - string: {text: " {capacity}%"}
+              not charging:
+                <<: *battery_discharging
+            left-margin: *particle_margin
+            right-margin: *particle_spacing
+            deco:
+              background:
+                color: *color_base
+    - clock:
+        content:
+          string:
+            text: " {time}"
+            margin: *particle_margin
+            deco:
+              background:
+                color: *color_base

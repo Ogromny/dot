@@ -1,0 +1,164 @@
+font pango:SFMono Nerd Font 11
+
+set $mod Mod4
+set $term foot
+set $menu tofi-run | xargs swaymsg exec --
+
+input "1267:12572:DELL097D:00_04F3:311C_Touchpad" {
+	tap enabled
+	dwt disabled
+}
+
+input "1:1:AT_Translated_Set_2_keyboard" {
+	xkb_layout	us,ru
+	xkb_variant	euro,phonetic
+	xkb_options	compose:ralt,grp:alt_shift_toggle
+}
+
+input "7847:2311:SEMITEK_USB-HID_Gaming_Keyboard" {
+	xkb_layout	us,ru
+	xkb_variant	euro,phonetic
+	xkb_options	compose:menu,grp:alt_shift_toggle
+}
+
+input *   xkb_layout	us,ru
+input * xkb_variant	euro,phonetic
+input * xkb_options compose:rctrl,grp:toggle
+
+input "1133:45915:MX_Keys_Keyboard" {
+	xkb_layout	us,ru
+	xkb_variant	euro,phonetic
+	xkb_options	compose:ralt,grp:alt_shift_toggle
+}
+
+input "65261:24673:OLKB_Preonic_Keyboard" {
+	xkb_layout	us,ru
+	xkb_variant	euro,phonetic
+	xkb_options	compose:lctrl
+}
+
+input "1133:45915:MX_Keys_Mouse" {
+	natural_scroll disable
+}
+
+bindswitch --reload --locked lid:on output eDP-1 disable
+bindswitch --reload --locked lid:off output eDP-1 enable
+
+output eDP-1 {
+	mode		1920x1080@60.027000Hz
+	scale 1.25
+}
+
+output DP-1 {
+	scale 2
+}
+
+output DP-2 {
+	scale 3
+}
+
+output DP-3 {
+	scale 2
+}
+
+bindsym $mod+Return exec $term
+bindsym $mod+Shift+q kill
+bindsym $mod+d exec $menu
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
+
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
+
+bindsym $mod+b splith
+bindsym $mod+v splitv
+
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+bindsym $mod+f fullscreen
+bindsym $mod+Shift+Space floating toggle
+
+mode "resize" {
+    bindsym Left resize shrink width 10px
+    bindsym Down resize grow height 10px
+    bindsym Up resize shrink height 10px
+    bindsym Right resize grow width 10px
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+bindsym XF86MonBrightnessUp exec light -s sysfs/backlight/intel_backlight -A 5
+bindsym XF86MonBrightnessDown exec light -s sysfs/backlight/intel_backlight -U 5
+
+bindsym XF86AudioRaiseVolume exec amixer sset Master 5%+
+bindsym XF86AudioLowerVolume exec amixer sset Master 5%-
+bindsym XF86AudioMute exec amixer sset Master 1+ toggle
+
+# bindsym $mod+i exec grim -g ${slurp}
+
+popup_during_fullscreen leave_fullscreen
+default_border pixel 1
+default_floating_border pixel 1
+hide_edge_borders smart
+floating_modifier $mod normal
+
+exec swaybg -i ~/Images/wallhaven-pkw6y3.jpg
+exec mako
+exec yambar
+exec sudo cpupower frequency-set -u 2.00GHz -g powersave
+
+set $gnome-schema org.gnome.desktop.interface
+exec_always {
+	gsettings set $gnome-schema gtk-theme "Orchis-Light-Compact"
+	gsettings set $gnome-schema icon-theme "Luv"
+	gsettings set $gnome-schema cursor-theme "Bibata-Modern-Ice"
+	gsettings set $gnome-schema cursor-size 24
+}
+
+gaps inner 5
+gaps outer 5
+
+client.focused          #7aa2f7 #414868 #c0caf5 #7dcfff   #7aa2f7
+client.focused_inactive #7aa2f7 #414868 #c0caf5 #7dcfff   #7aa2f7
+client.unfocused        #414868 #24283b #a9b1d6 #7dcfff   #414868
+client.urgent           #e0af68 #e0af68 #1d202f #7dcfff   #e0af68
+client.background       #F8F8F2
+
+# border_images.focused ~/.local/bin/sway-borders/contrib/borders/shadows.png
+# border_images.focused_inactive ~/.local/bin/sway-borders/contrib/borders/shadows.png
+# border_images.unfocused ~/.local/bin/sway-borders/contrib/borders/shadows.png
+# border_images.urgent ~/.local/bin/sway-borders/contrib/borders/shadows.png
+
+include /etc/sway/config.d/*
