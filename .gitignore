@@ -1,6 +1,7 @@
 /*
 
 !.gitignore
+!*.config
 !/foot/
 !/nvim/
 !/sway/
