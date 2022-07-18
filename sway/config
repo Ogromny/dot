@@ -137,7 +137,7 @@ floating_modifier $mod normal
 exec swaybg -i ~/Images/wallhaven-pkw6y3.jpg
 exec mako
 exec yambar
-exec sudo cpupower frequency-set -u 2.00GHz -g powersave
+exec doas /home/ogromny/.config/scripts/cpupower.sh governor powersave
 
 set $gnome-schema org.gnome.desktop.interface
 exec_always {
