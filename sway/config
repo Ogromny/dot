@@ -21,7 +21,7 @@ input "7847:2311:SEMITEK_USB-HID_Gaming_Keyboard" {
 	xkb_options	compose:menu,grp:alt_shift_toggle
 }
 
-input *   xkb_layout	us,ru
+input * xkb_layout	us,ru
 input * xkb_variant	euro,phonetic
 input * xkb_options compose:rctrl,grp:toggle
 
@@ -129,15 +129,17 @@ bindsym XF86AudioMute exec amixer sset Master 1+ toggle
 # bindsym $mod+i exec grim -g ${slurp}
 
 popup_during_fullscreen leave_fullscreen
-default_border pixel 1
-default_floating_border pixel 1
+default_border none
+default_floating_border none
 hide_edge_borders smart
 floating_modifier $mod normal
 
-exec swaybg -i ~/Images/wallhaven-pkw6y3.jpg
-exec mako
+exec swaybg -i ~/Images/wallhaven-qdgpyd.png
+# exec mako
 exec yambar
 exec doas /home/ogromny/.config/scripts/cpupower.sh governor powersave
+exec doas /home/ogromny/.config/scripts/cpupower.sh turbo disable
+# exec pipewire
 
 set $gnome-schema org.gnome.desktop.interface
 exec_always {
@@ -150,8 +152,8 @@ exec_always {
 gaps inner 5
 gaps outer 5
 
-client.focused          #7aa2f7 #414868 #c0caf5 #7dcfff   #7aa2f7
 client.focused_inactive #7aa2f7 #414868 #c0caf5 #7dcfff   #7aa2f7
+client.focused          #7aa2f7 #414868 #c0caf5 #7dcfff   #7aa2f7
 client.unfocused        #414868 #24283b #a9b1d6 #7dcfff   #414868
 client.urgent           #e0af68 #e0af68 #1d202f #7dcfff   #e0af68
 client.background       #F8F8F2
