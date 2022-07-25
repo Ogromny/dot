@@ -59,7 +59,8 @@ bar:
         path: "/home/ogromny/.config/yambar/scripts/xkb_layout_to_flag.sh"
         content:
           string:
-            text: "{layout}"
+            font: Noto Color Emoji:pixelsize=32
+            text: 🇷🇺
             left-margin: *particle_margin
             right-margin: *particle_spacing
             deco:

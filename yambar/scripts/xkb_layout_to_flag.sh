@@ -1,13 +1,17 @@
 #!/bin/sh -e
 
 KEYBOARD_NAME="Drop Preonic"
-OUTPUT="layout|string|%s"
 
-# first time
-# en it's always the first layout to be used
+fmt() {
+    case "$1" in
+        Russian*) LAYOUT="🇷🇺" ;;
+        English*) LAYOUT="🏴󠁧󠁢󠁥󠁮󠁧󠁿" ;;
+        *) LAYOUT="🏳️" ;;
+    esac
+    printf "layout|string|%s\n" "$LAYOUT"
+}
 
-printf "$OUTPUT\n" "en"
-echo ""
+fmt "English"
 
 swaymsg -mt subscribe '["input"]' | while read -r raw
 do
@@ -23,18 +27,5 @@ do
     JSON=$(printf "%s\n" "${JSON##\"}")
     JSON=$(printf "%s\n" "${JSON%%\"}")
 
-    case "$JSON" in
-        Russian*)
-            LAYOUT="ru"
-        ;;
-        English*)
-            LAYOUT="en"
-        ;;
-        *)
-            LAYOUT="??"
-        ;;
-    esac
-
-    printf "$OUTPUT\n" "$LAYOUT"
-    echo ""
+    fmt "$JSON"
 done
