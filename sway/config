@@ -135,7 +135,7 @@ hide_edge_borders smart
 floating_modifier $mod normal
 
 exec swaybg -i ~/Images/wallhaven-qdgpyd.png
-# exec mako
+exec fnott
 exec yambar
 exec doas /home/ogromny/.config/scripts/cpupower.sh governor powersave
 exec doas /home/ogromny/.config/scripts/cpupower.sh turbo disable
