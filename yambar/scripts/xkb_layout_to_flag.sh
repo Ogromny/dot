@@ -8,7 +8,7 @@ fmt() {
         English*) LAYOUT="🏴󠁧󠁢󠁥󠁮󠁧󠁿" ;;
         *) LAYOUT="🏳️" ;;
     esac
-    printf "layout|string|%s\n" "$LAYOUT"
+    printf "layout|string|%s\n\n" "$LAYOUT"
 }
 
 fmt "English"

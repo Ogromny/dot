@@ -55,17 +55,6 @@ bar:
                     foreground: *color_blue
 
   right:
-    - script:
-        path: "/home/ogromny/.config/yambar/scripts/xkb_layout_to_flag.sh"
-        content:
-          string:
-            font: Noto Color Emoji:pixelsize=32
-            text: 🇷🇺
-            left-margin: *particle_margin
-            right-margin: *particle_spacing
-            deco:
-              background:
-                color: *color_base
     - battery:
         name: "BAT0"
         anchors:
