@@ -2,10 +2,10 @@
 
 !.gitignore
 !*.config
+!/fnott/
 !/foot/
 !/nvim/
+!/scripts/
 !/sway/
 !/tofi/
 !/yambar/
-!/scripts/
-!/fnott/

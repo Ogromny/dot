@@ -134,12 +134,13 @@ default_floating_border none
 hide_edge_borders smart
 floating_modifier $mod normal
 
+exec pipewire
+exec pipewire-pulse
 exec swaybg -i ~/Images/wallhaven-qdgpyd.png
 exec fnott
 exec yambar
 exec doas /home/ogromny/.config/scripts/cpupower.sh governor powersave
 exec doas /home/ogromny/.config/scripts/cpupower.sh turbo disable
-# exec pipewire
 
 set $gnome-schema org.gnome.desktop.interface
 exec_always {

@@ -10,7 +10,7 @@ function M.init()
 	vim.o.expandtab = true
 	vim.o.completeopt = "menu,menuone,noselect"
 	vim.o.laststatus = 3
-	vim.o.cmdheight = 0
+	vim.o.cmdheight = 1
 	vim.g.mapleader = " "
 
 	vim.api.nvim_set_keymap("n", "<Up>", "<Nop>", {})
@@ -534,6 +534,11 @@ function M.null_ls()
 			new_client.offset_encoding = "utf-32"
 		end,
 	})
+end
+
+function M.lsp_lines()
+    vim.diagnostic.config { virtual_text = false }
+    require("lsp_lines").setup {}
 end
 
 return M
