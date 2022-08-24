@@ -17,6 +17,7 @@ function M.init()
 	vim.api.nvim_set_keymap("n", "<Down>", "<Nop>", {})
 	vim.api.nvim_set_keymap("n", "<Left>", "<Nop>", {})
 	vim.api.nvim_set_keymap("n", "<Right>", "<Nop>", {})
+    vim.api.nvim_set_keymap("t", "<esc>", "<C-\\><C-N>", { noremap = true })
 
 	local kind = {
 		Text = "TSText",
@@ -308,9 +309,9 @@ function M.nvim_lspconfig()
 	table.insert(runtime_path, "lua/?/init.lua")
 	lspconfig.sumneko_lua.setup({
 		cmd = {
-			"/home/ogromny/.local/bin/lua-language-server/bin/Linux/lua-language-server",
+            "/usr/bin/lua-language-server",
 			"-E",
-			"/home/ogromny/.local/bin/lua-language-server/bin/Linux/main.lua",
+			"/usr/share/lua-language-server/main.lua",
 		},
 		settings = {
 			Lua = {

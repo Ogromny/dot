@@ -135,12 +135,14 @@ hide_edge_borders smart
 floating_modifier $mod normal
 
 exec pipewire
-exec pipewire-pulse
 exec swaybg -i ~/Images/wallhaven-qdgpyd.png
 exec fnott
 exec yambar
 exec doas /home/ogromny/.config/scripts/cpupower.sh governor powersave
 exec doas /home/ogromny/.config/scripts/cpupower.sh turbo disable
+exec foot -a "senpai" senpai
+exec foot -a "toxic" toxic
+exec foot -a "aerc" aerc
 
 set $gnome-schema org.gnome.desktop.interface
 exec_always {
@@ -152,6 +154,10 @@ exec_always {
 
 gaps inner 5
 gaps outer 5
+
+assign [app_id="senpai"] 3
+assign [app_id="toxic"] 4
+assign [app_id="aerc"] 5
 
 client.focused_inactive #7aa2f7 #414868 #c0caf5 #7dcfff   #7aa2f7
 client.focused          #7aa2f7 #414868 #c0caf5 #7dcfff   #7aa2f7

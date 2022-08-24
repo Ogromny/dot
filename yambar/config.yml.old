@@ -7,14 +7,12 @@ color_green: &color_green a6d189ff
 color_yellow: &color_yellow e5c890ff
 color_blue: &color_blue 8caaeeff
 
-bar_margin: &bar_margin 0
+bar_margin: &bar_margin 20
 
 particle_margin: &particle_margin 20
 particle_spacing: &particle_spacing 25
 
 i3_margin: &i3_margin 15
-
-font_primary: &font_primary "ComicCodeLigatures Nerd Font:pixelsize=32"
 
 bar:
   height: 48
@@ -26,7 +24,7 @@ bar:
     margin: *bar_margin
     bottom-margin: 0
     width: 0
-  font: *font_primary
+  font: "ComicCodeLigatures Nerd Font:pixelsize=32"
   foreground: *color_text
 
   left:
@@ -42,52 +40,26 @@ bar:
         content:
           "":
             map:
+              tag: state
               default:
                 string:
                   <<: *i3_default
-              conditions:
-                state == urgent:
+              values:
+                urgent:
                   string:
                     <<: *i3_default
                     foreground: *color_red
-                state == focused:
+                focused:
                   string:
                     <<: *i3_default
                     foreground: *color_blue
 
   right:
     - pipewire:
-        anchors:
-          volume: &volume
-            conditions:
-              muted: {string: {text: "{volume}%", foreground: *color_red}}
-              ~muted: {string: {text: "{volume}%"}}
         content:
-          list:
-            items:
-              - map:
-                  conditions:
-                    type == "sink":
-                      map:
-                        conditions:
-                          icon == "audio-headset-bluetooth":
-                            string: {text: "🎧  "}
-                        default:
-                          - ramp:
-                              tag: volume
-                              items:
-                                - string: {text: "🔈  "}
-                                - string: {text: "🔉  "}
-                                - string: {text: "🔊  "}
-                    type == "source":
-                      - string: {text: "🎙  "}
-              - map:
-                  <<: *volume
-            left-margin: *particle_margin
-            right-margin: *particle_margin
-            deco:
-              background:
-                color: *color_base
+          string:
+            text: "pippppp!"
+
     - battery:
         name: "BAT0"
         anchors:
@@ -110,18 +82,19 @@ bar:
                 - string: {text: " {capacity}%"}
         content:
           map:
-            conditions:
-              state == unknown:
+            tag: state
+            values:
+              unknown:
                 <<: *battery_discharging
-              state == discharging:
+              discharging:
                 <<: *battery_discharging
-              state == charging:
+              charging:
                 - string: {text: , foreground: *color_green}
                 - string: {text: " {capacity}%"}
-              state == full:
+              full:
                 - string: {text: , foreground: *color_green}
                 - string: {text: " {capacity}%"}
-              state == not charging:
+              not charging:
                 <<: *battery_discharging
             left-margin: *particle_margin
             right-margin: *particle_spacing
