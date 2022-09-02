@@ -10,6 +10,8 @@ spawn() {
     nohup "$@" 2>/dev/null 1>/dev/null &
 }
 
+$HOME/.config/scripts/auto_power_off_laptop_screen.sh
+
 # utils
 spawn pipewire
 spawn swaybg -i $wallpaper
@@ -23,5 +25,9 @@ spawn foot -a "senpai" senpai
 spawn foot -a "toxic" toxic
 spawn foot -a "aerc" aerc
 
+spawn $HOME/Code/C/yambar/build/yambar
+
 # logs and statusbar
-tee "$log_file" | $HOME/somebar/build/somebar "$@"
+tee "$log_file"
+
+

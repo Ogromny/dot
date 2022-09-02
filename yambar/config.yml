@@ -30,38 +30,41 @@ bar:
   foreground: *color_text
 
   left:
-    - i3:
-        sort: ascending
+    - dwl:
         anchors:
-          i3_default: &i3_default
-            text: "{name}"
-            margin: *i3_margin
-            deco:
-              background:
-                color: *color_base
+          dwl_default: &dwl_default
+            text: "{id}"
+            margin: *particle_margin
+        number_of_tags: 9
+        dwl_info_filename: "/home/ogromny/dwl_info"
         content:
-          "":
-            map:
-              default:
-                string:
-                  <<: *i3_default
-              conditions:
-                state == urgent:
-                  string:
-                    <<: *i3_default
-                    foreground: *color_red
-                state == focused:
-                  string:
-                    <<: *i3_default
-                    foreground: *color_blue
+          list:
+            items:
+              - map:
+                  conditions:
+                    selected:
+                      string:
+                        <<: *dwl_default
+                        foreground: *color_base
+                        deco: {background: {color: *color_blue}}
+                    ~empty:
+                      string:
+                        <<: *dwl_default
+                        deco: {background: {color: *color_base}}
+                    urgent:
+                      string:
+                        <<: *dwl_default
+                        foreground: *color_base
+                        deco: {background: {color: *color_red}}
+                    # default tag
+                    id == 0:
+                      string:
+                        text: "{layout} {title}"
+                        margin: *particle_margin
+                        deco: {background: {color: *color_base}}
 
   right:
     - pipewire:
-        anchors:
-          volume: &volume
-            conditions:
-              muted: {string: {text: "{volume}%", foreground: *color_red}}
-              ~muted: {string: {text: "{volume}%"}}
         content:
           list:
             items:
@@ -74,15 +77,17 @@ bar:
                             string: {text: "🎧  "}
                         default:
                           - ramp:
-                              tag: volume
+                              tag: linear_volume
                               items:
-                                - string: {text: "🔈  "}
-                                - string: {text: "🔉  "}
-                                - string: {text: "🔊  "}
+                                - string: {text: 🔈}
+                                - string: {text: 🔉}
+                                - string: {text: 🔊}
                     type == "source":
-                      - string: {text: "🎙  "}
+                      - string: {text: 🎙 }
               - map:
-                  <<: *volume
+                  conditions:
+                    muted: {string: {text: "{linear_volume}%", foreground: *color_red, left-margin: 10}}
+                    ~muted: {string: {text: "{linear_volume}%", left-margin: 10}}
             left-margin: *particle_margin
             right-margin: *particle_margin
             deco:
