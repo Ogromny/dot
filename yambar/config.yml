@@ -19,7 +19,7 @@ font_primary: &font_primary "ComicCodeLigatures Nerd Font:pixelsize=32"
 bar:
   height: 48
   location: top
-  background: *color_transparent
+  background: *color_base
   margin: 0
   spacing: 0
   border:

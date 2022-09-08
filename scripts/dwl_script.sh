@@ -21,13 +21,11 @@ doas $HOME/.config/scripts/cpupower.sh governor powersave
 doas $HOME/.config/scripts/cpupower.sh turbo disable
 
 # autostart
-spawn foot -a "senpai" senpai
-spawn foot -a "toxic" toxic
-spawn foot -a "aerc" aerc
+# spawn foot -a "senpai" senpai
+# spawn foot -a "toxic" toxic
+# spawn foot -a "aerc" aerc
 
 spawn $HOME/Code/C/yambar/build/yambar
 
 # logs and statusbar
 tee "$log_file"
-
-
