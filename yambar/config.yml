@@ -30,38 +30,39 @@ bar:
   foreground: *color_text
 
   left:
-    - dwl:
-        anchors:
-          dwl_default: &dwl_default
-            text: "{id}"
-            margin: *particle_margin
-        number_of_tags: 9
-        dwl_info_filename: "/home/ogromny/dwl_info"
-        content:
+    - river:
+        title:
           list:
             items:
-              - map:
-                  conditions:
-                    selected:
-                      string:
-                        <<: *dwl_default
-                        foreground: *color_base
-                        deco: {background: {color: *color_blue}}
-                    ~empty:
-                      string:
-                        <<: *dwl_default
-                        deco: {background: {color: *color_base}}
-                    urgent:
-                      string:
-                        <<: *dwl_default
-                        foreground: *color_base
-                        deco: {background: {color: *color_red}}
-                    # default tag
-                    id == 0:
-                      string:
-                        text: "{layout} {title}"
-                        margin: *particle_margin
-                        deco: {background: {color: *color_base}}
+              - string:
+                  text: "{mode}"
+                  foreground: *color_red
+              - string:
+                  text: "{title}"
+                  margin: *particle_margin
+        content:
+          map:
+            conditions:
+              urgent:
+                string:
+                  text: "{id}"
+                  margin: *particle_margin
+                  foreground: *color_base
+                  deco:
+                    background:
+                      color: *color_red
+              focused:
+                string:
+                  text: "{id}"
+                  margin: *particle_margin
+                  foreground: *color_base
+                  deco:
+                    background:
+                      color: *color_blue
+              occupied:
+                string:
+                  text: "{id}"
+                  margin: *particle_margin
 
   right:
     - pipewire:
@@ -73,26 +74,18 @@ bar:
                     type == "sink":
                       map:
                         conditions:
-                          icon == "audio-headset-bluetooth":
-                            string: {text: "🎧  "}
+                          form_factor == "headset":
+                            string: {text: "BL", foreground: *color_blue}
                         default:
-                          - ramp:
-                              tag: linear_volume
-                              items:
-                                - string: {text: 🔈}
-                                - string: {text: 🔉}
-                                - string: {text: 🔊}
+                          string: {text: "SP"}
                     type == "source":
-                      - string: {text: 🎙 }
+                      - string: {text: "MC", foreground: *color_yellow}
               - map:
                   conditions:
                     muted: {string: {text: "{linear_volume}%", foreground: *color_red, left-margin: 10}}
                     ~muted: {string: {text: "{linear_volume}%", left-margin: 10}}
             left-margin: *particle_margin
             right-margin: *particle_margin
-            deco:
-              background:
-                color: *color_base
     - battery:
         name: "BAT0"
         anchors:
@@ -102,16 +95,16 @@ bar:
                 - ramp:
                     tag: capacity
                     items:
-                      - string: {text:  , foreground: *color_red}
-                      - string: {text:  , foreground: *color_yellow}
-                      - string: {text:  }
-                      - string: {text:  }
-                      - string: {text:  }
-                      - string: {text:  }
-                      - string: {text:  }
-                      - string: {text:  }
-                      - string: {text:  }
-                      - string: {text:  , foreground: *color_green}
+                      - string: {text: "UR", foreground: *color_red}
+                      - string: {text: "WR", foreground: *color_yellow}
+                      - string: {text: "WR"}
+                      - string: {text: "DS"}
+                      - string: {text: "DS"}
+                      - string: {text: "DS"}
+                      - string: {text: "DS"}
+                      - string: {text: "DS"}
+                      - string: {text: "DS"}
+                      - string: {text: "FU", foreground: *color_green}
                 - string: {text: " {capacity}%"}
         content:
           map:
@@ -121,23 +114,17 @@ bar:
               state == discharging:
                 <<: *battery_discharging
               state == charging:
-                - string: {text: , foreground: *color_green}
+                - string: {text: "CH", foreground: *color_green}
                 - string: {text: " {capacity}%"}
               state == full:
-                - string: {text: , foreground: *color_green}
+                - string: {text: "FU", foreground: *color_green}
                 - string: {text: " {capacity}%"}
               state == not charging:
                 <<: *battery_discharging
             left-margin: *particle_margin
             right-margin: *particle_spacing
-            deco:
-              background:
-                color: *color_base
     - clock:
         content:
           string:
-            text: " {time}"
+            text: "{time}"
             margin: *particle_margin
-            deco:
-              background:
-                color: *color_base

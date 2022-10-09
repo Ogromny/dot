@@ -1,0 +1,114 @@
+#!/bin/sh
+
+# This is the example configuration file for river.
+#
+# If you wish to edit this, you will probably want to copy it to
+# $XDG_CONFIG_HOME/river/init or $HOME/.config/river/init first.
+#
+# See the river(1), riverctl(1), and rivertile(1) man pages for complete
+# documentation.
+
+# Note: the "Super" modifier is also known as Logo, GUI, Windows, Mod4, etc.
+
+# Shortcut launcher
+riverctl map normal Super+Shift Return spawn foot
+riverctl map normal Super P spawn $HOME/.config/river/fuzzel
+
+# Life
+riverctl map normal Super+Shift Q close
+riverctl map normal Super+Shift E exit
+
+# Views 
+riverctl map normal Super J focus-view next
+riverctl map normal Super K focus-view previous
+riverctl map normal Super+Shift J swap next
+riverctl map normal Super+Shift K swap previous
+riverctl map normal Super Return zoom
+
+# Output
+riverctl map normal Super Period focus-output next
+riverctl map normal Super Comma focus-output previous
+riverctl map normal Super+Shift Period send-to-output next
+riverctl map normal Super+Shift Comma send-to-output previous
+
+# Ratio / Count
+riverctl map normal Super H send-layout-cmd rivertile "main-ratio -0.05"
+riverctl map normal Super L send-layout-cmd rivertile "main-ratio +0.05"
+riverctl map normal Super+Shift H send-layout-cmd rivertile "main-count +1"
+riverctl map normal Super+Shift L send-layout-cmd rivertile "main-count -1"
+
+# Float 
+riverctl map normal Super Space toggle-float
+riverctl map normal Super+Alt H move left 100
+riverctl map normal Super+Alt J move down 100
+riverctl map normal Super+Alt K move up 100
+riverctl map normal Super+Alt L move right 100
+riverctl map normal Super+Alt+Control H snap left
+riverctl map normal Super+Alt+Control J snap down
+riverctl map normal Super+Alt+Control K snap up
+riverctl map normal Super+Alt+Control L snap right
+riverctl map normal Super+Alt+Shift H resize horizontal -100
+riverctl map normal Super+Alt+Shift J resize vertical 100
+riverctl map normal Super+Alt+Shift K resize vertical -100
+riverctl map normal Super+Alt+Shift L resize horizontal 100
+
+# Fullscreen
+riverctl map normal Super F toggle-fullscreen
+
+# Cursor
+riverctl focus-follows-cursor normal
+riverctl map-pointer normal Super BTN_LEFT move-view
+riverctl map-pointer normal Super BTN_RIGHT resize-view
+ 
+# Tags
+for i in $(seq 1 9); do
+    tags=$((1 << ($i - 1)))
+    riverctl map normal Super $i set-focused-tags $tags
+    riverctl map normal Super+Shift $i set-view-tags $tags
+    riverctl map normal Super+Control $i toggle-focused-tags $tags
+    riverctl map normal Super+Shift+Control $i toggle-view-tags $tags
+done
+all_tags=$(((1 << 9) - 1))
+riverctl map normal Super 0 set-focused-tags $all_tags
+riverctl map normal Super+Shift 0 set-view-tags $all_tags
+
+# passthrough mode
+riverctl declare-mode passthrough
+riverctl map normal Super F11 enter-mode passthrough
+riverctl map passthrough Super F11 enter-mode normal
+ 
+# Media keys
+for mode in normal locked; do
+    riverctl map $mode None XF86AudioRaiseVolume  spawn "amixer sset Master 5%+"
+    riverctl map $mode None XF86AudioLowerVolume  spawn "amixer sset Master 5%-"
+    riverctl map $mode None XF86AudioMute         spawn "amixer sset Master 1+ toggle"
+done
+
+# Border / Background
+riverctl background-color 0x002b36
+riverctl border-width 1
+riverctl border-color-focused 0x93a1a1
+riverctl border-color-unfocused 0x586e75
+riverctl border-color-urgent 0xe78284
+ 
+# Keyboards
+riverctl set-repeat 50 300
+
+# Autostart
+riverctl spawn kanshi
+riverctl spawn pipewire
+riverctl spawn pipewire-pulse
+riverctl spawn swaybg -i $HOME/Images/wallhaven-qdgpyd.png
+riverctl spawn fnott
+riverctl spawn $HOME/yambar
+doas $HOME/.config/scripts/cpupower.sh governor powersave
+doas $HOME/.config/scripts/cpupower.sh turbo disable
+  
+# Layout
+riverctl default-layout rivertile
+riverctl attach-mode bottom
+riverctl map normal Super Up    send-layout-cmd rivertile "main-location top"
+riverctl map normal Super Right send-layout-cmd rivertile "main-location right"
+riverctl map normal Super Down  send-layout-cmd rivertile "main-location bottom"
+riverctl map normal Super Left  send-layout-cmd rivertile "main-location left"
+rivertile -view-padding 6 -outer-padding 6

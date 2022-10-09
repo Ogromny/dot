@@ -82,4 +82,8 @@ return packer.startup(function(use)
         config = config.todo,
         requires = "nvim-lua/plenary.nvim"
     }
+    use {
+        "vigoux/notifier.nvim",
+        config = config.notifier
+    }
 end)

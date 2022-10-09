@@ -1,0 +1,17 @@
+#!/bin/sh -e
+
+fuzzel \
+    --font="ComicCodeLigatures Nerd Font:size=14" \
+    --prompt="" \
+    --lines=5 \
+    --horizontal-pad=0 \
+    --vertical-pad=0 \
+    --inner-pad=0 \
+    --background=303446ff \
+    --text-color=c6d0f5ff \
+    --match-color=e78284ff \
+    --selection-color=99d1dbff \
+    --selection-text-color=303446ff \
+    --border-width=0 \
+    --border-radius=0 \
+    --show-actions

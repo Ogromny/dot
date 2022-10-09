@@ -12,8 +12,11 @@ spawn() {
 
 $HOME/.config/scripts/auto_power_off_laptop_screen.sh
 
+sleep 1
+
 # utils
 spawn pipewire
+spawn pipewire-pulse # needed for flatpak apps
 spawn swaybg -i $wallpaper
 
 # cpu
@@ -25,7 +28,8 @@ doas $HOME/.config/scripts/cpupower.sh turbo disable
 # spawn foot -a "toxic" toxic
 # spawn foot -a "aerc" aerc
 
-spawn $HOME/Code/C/yambar/build/yambar
+spawn fnott
+spawn $HOME/yambar
 
 # logs and statusbar
 tee "$log_file"

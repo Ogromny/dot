@@ -140,6 +140,7 @@ function M.lspconfig()
 
     -- lsp server
     local capabilities = vim.lsp.protocol.make_client_capabilities()
+    capabilities.textDocument.completion.completionItem.snippetSupport = true
     capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
 
     lspconfig.clangd.setup {
@@ -147,6 +148,26 @@ function M.lspconfig()
             "clangd",
             "--header-insertion=never"
         },
+        capabilities = capabilities,
+        on_attach = on_attach
+    }
+    lspconfig.gopls.setup {
+        capabilities = capabilities,
+        on_attach = on_attach
+    }
+    lspconfig.zls.setup {
+        capabilities = capabilities,
+        on_attach = on_attach
+    }
+    lspconfig.cssls.setup {
+        capabilities = capabilities,
+        on_attach = on_attach
+    }
+    lspconfig.html.setup {
+        capabilities = capabilities,
+        on_attach = on_attach
+    }
+    lspconfig.tailwindcss.setup {
         capabilities = capabilities,
         on_attach = on_attach
     }
@@ -204,6 +225,10 @@ end
 
 function M.todo()
     require("todo-comments").setup()
+end
+
+function M.notifier()
+    require("notifier").setup()
 end
 
 return M
